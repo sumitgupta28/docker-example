@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,32 +28,36 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/api/v1")
 @Api(description = "Set of endpoints for Creating, Retrieving, Updating and Deleting of Employees.")
 public class EmployeeController {
+	
+	private static final Logger LOGGER = LogManager.getLogger(EmployeeController.class);
 
+	
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
 	@RequestMapping(method = RequestMethod.GET, path="/employees", produces = "application/json")
-	@ApiOperation("Returns list of all Persons in the system.")
+	@ApiOperation("Returns list of all Employees in the system.")
 	public List<Employee> getAllEmployees() {
 		List<Employee> employees=employeeRepository.findAll();
-		System.out.println(employees.toString());
+		LOGGER.info(" All the Employees");
 		return employees;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/employees/{employeeId}", produces = "application/json")
 	@ApiOperation("Returns a specific Employee by their identifier. 404 if does not exist.")
 	public ResponseEntity<Employee> getEmployeeById(
-			@ApiParam("Id of the person to be obtained. Cannot be empty.") @PathVariable(value = "employeeId") String employeeId)
+			@ApiParam("Id of the employee to be obtained. Cannot be empty.") @PathVariable(value = "employeeId") String employeeId)
 			throws ResourceNotFoundException {
 		Employee employee = findEmployeeById(employeeId);
+		LOGGER.info(" Employee {} by Employee Id {} " , employee,employeeId);
 		return ResponseEntity.ok().body(employee);
 	}
 
 	@RequestMapping(method = RequestMethod.POST,path="/employees", produces = "application/json")
 	@ApiOperation("Creates a new Employee.")
 	public Employee createEmployee(@Valid @RequestBody Employee employee) {
-		System.out.println(employee.toString());
-		return employeeRepository.save(employee);
+		LOGGER.info(" Creating new Employee {}" , employee);
+	return employeeRepository.save(employee);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/employees/{employeeId}")
@@ -61,17 +67,18 @@ public class EmployeeController {
 		employee.setEmailId(employeeDetails.getEmailId());
 		employee.setLastName(employeeDetails.getLastName());
 		employee.setFirstName(employeeDetails.getFirstName());
+		LOGGER.info(" Update Employee {}" , employee);
 		final Employee updatedEmployee = employeeRepository.save(employee);
 		return ResponseEntity.ok(updatedEmployee);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/employees/{id}")
-	@ApiOperation("Deletes a person from the system. 404 if the employee identifier is not found.")
+	@ApiOperation("Deletes a employee from the system. 404 if the employee identifier is not found.")
 	public Map<String, Boolean> deleteEmployee(
 			@ApiParam("Id of the Employee to be deleted. Cannot be empty.") @PathVariable(value = "id") String employeeId)
 			throws ResourceNotFoundException {
 		Employee employee = findEmployeeById(employeeId);
-
+		LOGGER.info(" Delete Employee {} by EmployeeId" ,employee,employeeId);
 		employeeRepository.deleteByEmployeeId(employee.getEmployeeId());
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
