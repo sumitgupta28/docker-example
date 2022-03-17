@@ -7,7 +7,7 @@ services:
     - 27017:27017
     command: --smallfiles
   app:
-    image: employee-service
+    image: sumitgupta28/employee-service
     ports:
     - 8080:8080
     links:

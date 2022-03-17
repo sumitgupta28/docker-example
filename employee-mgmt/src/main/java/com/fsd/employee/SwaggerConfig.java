@@ -16,16 +16,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-	@Bean
-	public Docket apiDocket() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.fsd.employee.controller")).paths(PathSelectors.any())
-				.build().apiInfo(apiEndPointsInfo());
-	}
+    @Bean
+    public Docket apiDocket() {
+        return new Docket(DocumentationType.SWAGGER_2).select()
+                .apis(RequestHandlerSelectors.basePackage("com.fsd.employee.controller")).paths(PathSelectors.any())
+                .build().apiInfo(apiEndPointsInfo());
+    }
 
-	private ApiInfo apiEndPointsInfo() {
-		return new ApiInfoBuilder().title("Spring Boot REST API").description("Employee Management REST API")
-				.contact(new Contact("Sumit Gupta", "www.fsd-learn.net", "sumitgupta28@gmail.com")).version("1.0.0")
-				.build();
-	}
+    private ApiInfo apiEndPointsInfo() {
+        return new ApiInfoBuilder().title("Spring Boot REST API").description("Employee Management REST API")
+                .contact(new Contact("Sumit Gupta", "www.fsd-learn.net", "sumitgupta28@gmail.com")).version("1.0.0")
+                .build();
+    }
 }
