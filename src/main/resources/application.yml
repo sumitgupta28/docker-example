@@ -1,23 +1,29 @@
 #
 server:
-    servlet:
-        context-path: /employee-service
+  servlet:
+    context-path: /employee-service
 
   #mongodb
 spring:
-    data:
-        mongodb:
-            uri: mongodb://mongodb/emp-db
-            database: emp-db
-            host: mongodb
-            port: 27017
-    datasource:
-        :driverClassName: MongoDB
-  
+  data:
+    mongodb:
+      uri: mongodb://mongodb/emp-db
+      database: emp-db
+      host: mongodb
+      port: 27017
+  datasource:
+    :driverClassName: MongoDB
+
 #logging
 
 logging:
-    level:
-        root: ERROR
-        org.springframework.data: error
-        org.springframework: error
+  level:
+    root: ERROR
+    org.springframework.data: error
+    org.springframework: error
+
+#Spring documentation
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method

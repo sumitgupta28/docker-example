@@ -4,12 +4,12 @@ services:
     image: mongo:latest
     container_name: "mongodb"
     ports:
-    - 27017:27017
+      - 27017:27017
     command: mongod
   app:
     build:
-      context: employee-mgmt
+      context: .
     ports:
       - 8080:8080
     links:
-    - mongodb
+      - mongodb

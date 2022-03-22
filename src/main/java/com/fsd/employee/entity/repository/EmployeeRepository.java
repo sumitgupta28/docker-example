@@ -1,10 +1,9 @@
 package com.fsd.employee.entity.repository;
 
-import java.util.Optional;
-
+import com.fsd.employee.entity.Employee;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.fsd.employee.entity.Employee;
+import java.util.Optional;
 
 public interface EmployeeRepository extends MongoRepository<Employee, String> {
 
